@@ -1,0 +1,14 @@
+			******************************
+			Python Flask - Uploading Files
+			******************************
+
+--------------
+* Julian Nash:
+--------------
+	
+Uploading files with Flask - Python on the web - Learning Flask Series Pt. 13
+
+	https://www.youtube.com/watch?v=6WruncSoCdI
+
+
+

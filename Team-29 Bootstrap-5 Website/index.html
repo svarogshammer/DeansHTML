@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SEPA: SWE40002">
+    <meta name="description" content="Team-29">
+    <meta name="description" content="Project: Assessment Investigator">
+    <meta name="keywords" content="HTML, CSS, JavaScript, PHP">
+    <meta name="author" content="Dean Broderick: 101198223">
+    <meta name="author" content="Liam Bradely: 100568964@student.swin.edu.au">
+    <meta name="author" content="Connor McMillan : 102510239@student.swin.edu.au">
+    <title>Python Flask Tutorial</title>
+    <!-- THIS WEBSITE IS CONSTRUCTED USING BOOTSTRAP-5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="mystyle.css">
+  </head>
+
+<body>
+    <!--NAVBAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container"> <!--fluid removed-->
+         
+          <a class="navbar-brand" href="./TeamPage/team.html">Team-29
+            <img src="./Swinburne-logo.png" alt="Team-29 logo" height="80"/>
+            Assessment Investigator Project
+          </a>
+        
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto flex"> <!-- ms REPLACES ml : It means s=start, e=end -->
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.swinburne.edu.au/">Swinburne University</a>
+              </li>
+              
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  About Team-29
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="./TeamPage/team.html">Team-29</a></li>
+                  <li><a class="dropdown-item" href="https://www.swinburne.edu.au/">Swinburne University</a></li>
+                </ul>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+<!-- NEW CONTAINER -->
+<div class="container pt-4">
+
+  <div class="row">
+    <div class="col-md-4" style="margin-left: 450px;">
+      <h3 class="mb-4" style="text-align:center" >Upload your PDF Document Here</h3>
+    </a>
+        <p>
+          Upload your document here. The key words will be extracted and then passed to our webscraper which shall then
+          search the web for any websites that contain copies of that document.
+        </p>
+    </div>
+  </div>
+  <br/><br/>
+  
+  <div class="row cards" style="margin-left: 500px;">
+    <div class="col-md-4 d-flex justfy-content-center">
+          <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title" style="margin-left: 25px;">Document Upload</h5>
+                  
+                  <input type="file" id="inpFile" style="margin-left: 70px;" multiple><br/><br/>
+                  <button id="btnUpload" style="margin-left: 55px;">Upload Files</button>
+                </div>
+          </div>
+    </div>
+  </div>
+</div>
+<br/><br/><br/><br/><br/><br/>
+
+  <!-- FOOTER -->
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <span class="navbar-text">
+        <footer>
+              <p style="margin-left: 150px;"><b>SWE40002 Software Engineering Project-B:</b>&nbsp;
+              Liam
+              <a href="mailto:100568964@student.swin.edu.au" style="text-decoration: none;">100568964@student.swin.edu.au</a>
+              &nbsp;      Dean
+              <a href="mailto:101198223@student.swin.edu.au" style="text-decoration: none;">101198223@student.swin.edu.au</a>
+              *&nbsp;     Connor
+              <a href="mailto:102510239@student.swin.edu.au" style="text-decoration: none;">102510239@student.swin.edu.au</a>
+              </p>
+              
+        </footer>
+    </span>
+  </div>
+</nav>
+
+<script>
+  const inpFile = document.getElementById("inpFile")
+  const btnUpload = document.getElementById("btnUpload")
+
+  btnUpload.addEventListener("click", function () {
+      const formData = new FormData();    //special javascript object for holding form-data to eventually submit to web-server
+
+      console.log(inpFile.files);
+      for (const file of inpFile.files){
+          formData.append("myFiles[]", file);  // the name "myFiles" represents all files to submit
+      }
+
+/*----------------------------------------------------------------------------------------------------
+PHP likes the format of "myFiles[]" using square brackets when submitting multiple files, so the sqaure
+brackets must be included - but other web-servers such as node.js are fine with just "myFiles" without
+the square brackets. 
+------------------------------------------------------------------------------------------------------*/
+
+      //note that using 'myFiles' in the line above is similar to putting into the input type - name="myFiles"
+  /*    
+      for (const [key, value] of formData) {
+          console.log(`key: ${key}`);
+          console.log(`value: ${value}`);
+      }
+  */ 
+      fetch('http://localhost:3000/upload', {
+          method: "post",
+          body: formData
+      }).catch(console.error);
+
+/*--------------------------------------------------------------------------------------------------------
+By submitting the 'body' as 'formData' the Javascript knows that it's a formData object, as used in 
+<formData.append("myFiles", file);> above. 
+----------------------------------------------------------------------------------------------------------*/
+
+  });
+
+</script>
+</body>
+</html>
